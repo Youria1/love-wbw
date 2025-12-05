@@ -2,74 +2,166 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>最重要的一句话</title>
 
 <style>
-body {
-    margin: 0;
-    background: linear-gradient(#ffafcc, #ffc8dd, #ffcad4);
-    overflow: hidden;
-    text-align: center;
-    font-family: "微软雅黑";
-}
+    body {
+        margin: 0;
+        font-family: "微软雅黑", sans-serif;
+        background: radial-gradient(circle at center, #ffe6f2, #ff9abb, #ff6394, #2b1055 85%);
+        background-size: 200% 200%;
+        animation: skyFade 15s ease alternate infinite;
+        overflow: hidden;
+        text-align: center;
+        color: #fff;
+        position: relative;
+    }
 
-.title {
-    margin-top: 120px;
-    font-size: 40px;
-    color: #fff;
-    font-weight: bold;
-    animation: fadeIn 3s forwards;
-    opacity: 0;
-}
+    @keyframes skyFade {
+        0% { background-position: 50% 20%; }
+        100% { background-position: 50% 80%; }
+    }
 
-@keyframes fadeIn {
-    to { opacity: 1; }
-}
+    /* 星星 */
+    .star {
+        position: fixed;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+        0%,100% { opacity: 0.2; }
+        50% { opacity: 1; }
+    }
 
-.propose-btn {
-    margin-top: 80px;
-    padding: 20px 45px;
-    font-size: 28px;
-    background: #fff;
-    color: #e75480;
-    border: none;
-    border-radius: 60px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255,255,255,0.8);
-}
+    /* 标题 */
+    .title {
+        margin-top: 100px;
+        font-size: 8vw;
+        max-font-size: 40px;
+        font-weight: bold;
+        opacity: 0;
+        animation: fadeIn 3s forwards;
+        text-shadow: 0 0 12px rgba(255,255,255,0.8);
+    }
 
-#answer {
-    margin-top: 50px;
-    font-size: 45px;
-    font-weight: bold;
-    color: #fff;
-    opacity: 0;
-    transition: 1.5s;
-}
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 按钮 */
+    .propose-btn {
+        margin-top: 60px;
+        padding: 20px 46px;
+        font-size: 26px;
+        background: #fff;
+        color: #e75480;
+        border: none;
+        border-radius: 60px;
+        cursor: pointer;
+        box-shadow: 0 0 18px rgba(255,255,255,0.8);
+        animation: breathe 2.4s infinite ease-in-out;
+    }
+
+    @keyframes breathe {
+        0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        50% { transform: scale(1.08); box-shadow: 0 0 25px rgba(255,255,255,1); }
+        100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+    }
+
+    /* 求婚句子 */
+    #answer {
+        margin-top: 60px;
+        font-size: 9vw;
+        max-font-size: 45px;
+        font-weight: bold;
+        color: #fff1f8;
+        text-shadow: 0 0 18px rgba(255,255,255,1);
+        opacity: 0;
+        transition: 1.8s;
+    }
+
+    /* 爱心爆发 */
+    @keyframes heartBoom {
+        0% { transform: scale(0); opacity: 1; }
+        50% { transform: scale(1.4); opacity: 1; }
+        100% { transform: scale(2); opacity: 0; }
+    }
+    .boomHeart {
+        position: fixed;
+        color: #ff9ac3;
+        font-size: 30px;
+        animation: heartBoom 1.5s ease-out forwards;
+        pointer-events: none;
+    }
+
+    /* 玫瑰花瓣 */
+    @keyframes petalFall {
+        0% { transform: translateY(0) scale(0.6); opacity: 1; }
+        100% { transform: translateY(-150px) scale(1.4); opacity: 0; }
+    }
+    .petal {
+        position: fixed;
+        font-size: 26px;
+        animation: petalFall 2.5s ease-out forwards;
+        pointer-events: none;
+    }
 </style>
 </head>
 
 <body>
 
+<!-- 星空 -->
+<script>
+for (let i = 0; i < 45; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = Math.random() * 100 + "vh";
+    s.style.animationDuration = 2 + Math.random() * 3 + "s";
+    document.body.appendChild(s);
+}
+</script>
+
 <div class="title">最后…也是最重要的那句话</div>
 
 <button class="propose-btn" onclick="showLove()">点击这里</button>
 
-<div id="answer">你愿意嫁给我吗 ❤️</div>
+<div id="answer">你愿意嫁给我吗？ ❤️</div>
 
 <script>
 function showLove() {
-    document.getElementById("answer").style.opacity = 1;
+    // 展示求婚句子
+    const ans = document.getElementById("answer");
+    ans.style.opacity = 1;
 
-    for (let i = 0; i < 60; i++) {
-        const heart = document.createElement("div");
-        heart.innerHTML = "❤️";
-        heart.style.position = "fixed";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.top = Math.random() * 100 + "vh";
-        heart.style.fontSize = (20 + Math.random() * 30) + "px";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 2000);
+    // 爱心爆发
+    for (let i = 0; i < 50; i++) {
+        const h = document.createElement("div");
+        h.className = "boomHeart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.top = Math.random() * 100 + "vh";
+        h.style.fontSize = 20 + Math.random() * 30 + "px";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1500);
+    }
+
+    // 周围玫瑰花瓣飞舞
+    for (let i = 0; i < 20; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.innerHTML = "🌹";
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.top = Math.random() * 100 + "vh";
+        p.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 2500);
     }
 }
 </script>
