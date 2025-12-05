@@ -16,25 +16,34 @@
 
     /* 照片轮播容器 */
     .slideshow {
-        width: 320px;
-        height: 320px;
+        width: 90vw;
+        max-width: 360px;
+        height: 90vw;
+        max-height: 360px;
+        background: rgba(255,255,255,0.3);
         margin: 80px auto 20px auto;
         position: relative;
         border-radius: 20px;
         overflow: hidden;
         box-shadow: 0 0 25px rgba(255,255,255,0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .slideshow img {
         width: 100%;
         height: 100%;
         position: absolute;
-        object-fit: cover;
+        object-fit: contain;       /* ⭐ 显示整张照片 */
         opacity: 0;
         animation: slideShow 36s infinite;
+        background: rgba(255,255,255,0.5); /* 清爽底色避免黑块 */
+        padding: 10px;             /* 更好看 */
+        box-sizing: border-box;
     }
 
-    /* 9 张图片依次淡入 */
+    /* 9张图片淡入淡出 */
     .slideshow img:nth-child(1) { animation-delay: 0s; }
     .slideshow img:nth-child(2) { animation-delay: 4s; }
     .slideshow img:nth-child(3) { animation-delay: 8s; }
@@ -58,6 +67,7 @@
         line-height: 40px;
         opacity: 0;
     }
+
     .t1 { animation: fadeIn 3s forwards 1s; }
     .t2 { animation: fadeIn 3s forwards 3s; }
     .t3 { animation: fadeIn 3s forwards 5s; }
@@ -80,6 +90,11 @@
         opacity: 0;
         animation: fadeIn 3s forwards 9s;
         box-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    /* 爱心飘落动画 */
+    @keyframes fall {
+        to { transform: translateY(110vh); opacity: 0; }
     }
 </style>
 </head>
@@ -106,24 +121,16 @@ function createHeart() {
 setInterval(createHeart, 350);
 </script>
 
-<style>
-@keyframes fall {
-    to { transform: translateY(110vh); opacity: 0; }
-}
-</style>
-
-<!-- 背景音乐 -->
-<!-- <audio autoplay loop>
+<!-- 背景音乐（静音自动播放 + 点击恢复） -->
+<audio id="bgm" autoplay loop muted>
     <source src="music/marry me.mp3" type="audio/mp3">
-</audio> -->
-
-<audio id="bgm" src="music/marry me.mp3" autoplay loop muted></audio>
+</audio>
 
 <script>
 document.addEventListener("click", function () {
     const audio = document.getElementById("bgm");
-    audio.muted = false;    // 取消静音
-    audio.play();           // 播放
+    audio.muted = false;
+    audio.play();
 }, { once: true });
 </script>
 
@@ -140,7 +147,7 @@ document.addEventListener("click", function () {
     <img src="img/image9.jpg">
 </div>
 
-<!-- 表白语 -->
+<!-- 文案 -->
 <div class="text t1">遇见你，是我一生中最美丽的意外。</div>
 <div class="text t2">你的笑容，让所有风景都黯然失色。</div>
 <div class="text t3">我想牵着你的手，一直走下去。</div>
