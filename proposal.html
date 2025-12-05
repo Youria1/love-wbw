@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>我想对你说的话</title>
+
+<style>
+body {
+    margin: 0;
+    background: #000;
+    text-align: center;
+    color: #fff;
+    font-family: "微软雅黑";
+}
+
+.title {
+    margin-top: 40px;
+    font-size: 32px;
+    animation: fade 2s forwards;
+    opacity: 0;
+}
+
+@keyframes fade {
+    to { opacity: 1; }
+}
+
+video {
+    width: 90%;
+    margin-top: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.5);
+}
+
+.next-btn {
+    margin-top: 30px;
+    padding: 12px 25px;
+    background: pink;
+    border: none;
+    font-size: 22px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">在看视频之前…我想让你知道一件事</div>
+
+<!-- 占位视频 -->
+<video controls>
+    <source src="video/demo.mp4" type="video/mp4">
+</video>
+
+<button class="next-btn" onclick="location.href='final.html'">下一页 →</button>
+
+</body>
+</html>

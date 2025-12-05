@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>给你的一封情书</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: "微软雅黑", sans-serif;
+        background: linear-gradient(#ffdde1, #ee9ca7);
+        overflow: hidden;
+        text-align: center;
+        color: #fff;
+    }
+
+    /* 照片轮播容器 */
+    .slideshow {
+        width: 320px;
+        height: 320px;
+        margin: 80px auto 20px auto;
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0 25px rgba(255,255,255,0.7);
+    }
+
+    .slideshow img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        object-fit: cover;
+        opacity: 0;
+        animation: slideShow 36s infinite;
+    }
+
+    /* 9 张图片依次淡入 */
+    .slideshow img:nth-child(1) { animation-delay: 0s; }
+    .slideshow img:nth-child(2) { animation-delay: 4s; }
+    .slideshow img:nth-child(3) { animation-delay: 8s; }
+    .slideshow img:nth-child(4) { animation-delay: 12s; }
+    .slideshow img:nth-child(5) { animation-delay: 16s; }
+    .slideshow img:nth-child(6) { animation-delay: 20s; }
+    .slideshow img:nth-child(7) { animation-delay: 24s; }
+    .slideshow img:nth-child(8) { animation-delay: 28s; }
+    .slideshow img:nth-child(9) { animation-delay: 32s; }
+
+    @keyframes slideShow {
+        0% { opacity: 0; }
+        10% { opacity: 1; }
+        30% { opacity: 1; }
+        40% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+
+    .text {
+        font-size: 26px;
+        line-height: 40px;
+        opacity: 0;
+    }
+    .t1 { animation: fadeIn 3s forwards 1s; }
+    .t2 { animation: fadeIn 3s forwards 3s; }
+    .t3 { animation: fadeIn 3s forwards 5s; }
+    .t4 { animation: fadeIn 3s forwards 7s; }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .next-btn {
+        margin-top: 40px;
+        padding: 15px 35px;
+        font-size: 22px;
+        color: #e75480;
+        background: #fff;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        opacity: 0;
+        animation: fadeIn 3s forwards 9s;
+        box-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+</style>
+</head>
+
+<body>
+
+<!-- 樱花飘落 -->
+<script src="https://cdn.jsdelivr.net/gh/hustcc/sakura/sakura.min.js"></script>
+
+<!-- 爱心飘落 -->
+<script>
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.innerHTML = "❤️";
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-20px";
+    heart.style.fontSize = (14 + Math.random() * 20) + "px";
+    heart.style.opacity = 0.9;
+    heart.style.animation = "fall 4s linear";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 4000);
+}
+setInterval(createHeart, 350);
+</script>
+
+<style>
+@keyframes fall {
+    to { transform: translateY(110vh); opacity: 0; }
+}
+</style>
+
+<!-- 背景音乐 -->
+<!-- <audio autoplay loop>
+    <source src="music/marry me.mp3" type="audio/mp3">
+</audio> -->
+
+<audio id="bgm" src="music/marry me.mp3" autoplay loop muted></audio>
+
+<script>
+document.addEventListener("click", function () {
+    const audio = document.getElementById("bgm");
+    audio.muted = false;    // 取消静音
+    audio.play();           // 播放
+}, { once: true });
+</script>
+
+<!-- 照片轮播 -->
+<div class="slideshow">
+    <img src="img/image1.jpg">
+    <img src="img/image2.jpg">
+    <img src="img/image3.jpg">
+    <img src="img/image4.jpg">
+    <img src="img/image5.jpg">
+    <img src="img/image6.jpg">
+    <img src="img/image7.jpg">
+    <img src="img/image8.jpg">
+    <img src="img/image9.jpg">
+</div>
+
+<!-- 表白语 -->
+<div class="text t1">遇见你，是我一生中最美丽的意外。</div>
+<div class="text t2">你的笑容，让所有风景都黯然失色。</div>
+<div class="text t3">我想牵着你的手，一直走下去。</div>
+<div class="text t4">所以……我有句话，想对你说。</div>
+
+<!-- 跳转按钮 -->
+<button class="next-btn" onclick="location.href='proposal.html'">下一页 →</button>
+
+</body>
+</html>
