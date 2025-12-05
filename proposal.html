@@ -2,57 +2,237 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>我想对你说的话</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>给你的一段特别的视频</title>
 
 <style>
-body {
-    margin: 0;
-    background: #000;
-    text-align: center;
-    color: #fff;
-    font-family: "微软雅黑";
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: "微软雅黑", sans-serif;
+        background: radial-gradient(circle at center, #ffe6f2, #ff9abb, #ff6394, #2b1055 85%); /* 星空渐亮过渡 */
+        background-size: 200% 200%;
+        animation: skyFade 15s ease alternate infinite;
+        color: #fff;
+        text-align: center;
+        overflow-x: hidden;
+        position: relative;
+    }
 
-.title {
-    margin-top: 40px;
-    font-size: 32px;
-    animation: fade 2s forwards;
-    opacity: 0;
-}
+    @keyframes skyFade {
+        0% { background-position: 50% 20%; }
+        100% { background-position: 50% 80%; }
+    }
 
-@keyframes fade {
-    to { opacity: 1; }
-}
+    /* 星点效果 */
+    .star {
+        position: fixed;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 3s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+        0%,100% { opacity: 0.2; }
+        50% { opacity: 1; }
+    }
 
-video {
-    width: 90%;
-    margin-top: 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 25px rgba(255,255,255,0.5);
-}
+    /* 标题 */
+    .title {
+        margin-top: 30px;
+        font-size: 7vw;
+        max-font-size: 32px;
+        font-weight: bold;
+        opacity: 0;
+        animation: fadeIn 2.5s forwards;
+    }
 
-.next-btn {
-    margin-top: 30px;
-    padding: 12px 25px;
-    background: pink;
-    border: none;
-    font-size: 22px;
-    border-radius: 40px;
-    cursor: pointer;
-}
+    .subtitle {
+        margin-top: 10px;
+        font-size: 5vw;
+        max-font-size: 24px;
+        opacity: 0;
+        line-height: 1.6;
+        animation: fadeIn 3s forwards 1.2s;
+    }
+
+    /* 新增求婚字幕 */
+    .love-line {
+        margin-top: 18px;
+        font-size: 5vw;
+        max-font-size: 28px;
+        opacity: 0;
+        color: #ffeef7;
+        text-shadow: 0 0 12px rgba(255,255,255,0.9);
+        animation: fadeIn 3s forwards 2.4s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 视频容器 */
+    .video-box {
+        width: 92vw;
+        max-width: 800px;
+        margin: 30px auto;
+        background: rgba(255,255,255,0.18);
+        padding: 10px;
+        border-radius: 18px;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 0 25px rgba(255,255,255,0.6);
+        opacity: 0;
+        animation: fadeIn 2.5s forwards 3.3s;
+        position: relative;
+    }
+
+    video {
+        width: 100%;
+        border-radius: 12px;
+        display: block;
+    }
+
+    /* 旋转的心形 loading */
+    #loading {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 50px;
+        animation: rotate 1.6s linear infinite;
+        color: #ffb3d9;
+        text-shadow: 0 0 15px #fff;
+    }
+    @keyframes rotate {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* 下一页按钮 */
+    .next-btn {
+        margin-top: 18px;
+        padding: 14px 32px;
+        font-size: 20px;
+        background: #fff;
+        color: #e75480;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 0 18px rgba(255,255,255,0.7);
+        opacity: 0;
+        animation: fadeIn 2s forwards 4.5s;
+    }
+
+    .next-btn:hover {
+        background: #ffe4ec;
+    }
+
+    /* 玫瑰花瓣动画 */
+    .petal {
+        position: fixed;
+        font-size: 22px;
+        animation: petalFall 2.2s ease-out forwards;
+        pointer-events: none;
+    }
+    @keyframes petalFall {
+        0% { transform: scale(0.5); opacity: 0; }
+        40% { opacity: 1; transform: scale(1); }
+        100% { opacity: 0; transform: scale(2) translateY(-80px); }
+    }
+
+    /* 视频暂停显示大心形按钮 */
+    #resumeHeart {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(255,255,255,0.85);
+        border-radius: 50%;
+        padding: 12px 16px;
+        font-size: 26px;
+        display: none;
+        box-shadow: 0 0 15px #fff;
+        cursor: pointer;
+    }
+
 </style>
 </head>
 
 <body>
 
-<div class="title">在看视频之前…我想让你知道一件事</div>
+<!-- 星空点点 -->
+<script>
+for (let i = 0; i < 40; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = Math.random() * 100 + "vh";
+    s.style.animationDuration = 2 + Math.random() * 3 + "s";
+    document.body.appendChild(s);
+}
+</script>
 
-<!-- 占位视频 -->
-<video controls>
-    <source src="video/demo.mp4" type="video/mp4">
-</video>
+<!-- 文字 -->
+<div class="title">在这段视频里，有一句话我一直想对你说…</div>
+
+<div class="subtitle">
+    爱，是我们一起经历的点点滴滴。<br>
+    这一段视频，记录着我对你最真挚的心意。
+</div>
+
+<div class="love-line">我想和你共度一生…</div>
+
+<!-- 视频盒子 -->
+<div class="video-box">
+    <div id="loading">❤️</div>
+
+    <video id="video" preload="auto">
+        <source src="video/demo.mp4" type="video/mp4">
+        你的浏览器不支持视频播放。
+    </video>
+
+    <!-- 暂停时出现的继续按钮 -->
+    <div id="resumeHeart">❤️</div>
+</div>
 
 <button class="next-btn" onclick="location.href='final.html'">下一页 →</button>
+
+<script>
+const video = document.getElementById("video");
+const loading = document.getElementById("loading");
+const resumeHeart = document.getElementById("resumeHeart");
+
+/* 💫 视频加载后取消loading */
+video.oncanplay = () => {
+    loading.style.display = "none";
+};
+
+/* 💘 视频暂停→显示爱心继续播放按钮 */
+video.onpause = () => {
+    resumeHeart.style.display = "block";
+};
+video.onplay = () => {
+    resumeHeart.style.display = "none";
+};
+resumeHeart.onclick = () => {
+    video.play();
+};
+
+/* 🌹 点击视频 → 花瓣绽放 */
+video.onclick = function(e) {
+    for (let i = 0; i < 12; i++) {
+        const p = document.createElement("div");
+        p.className = "petal";
+        p.innerHTML = "🌹";
+        p.style.left = (e.clientX - 10 + Math.random() * 40 - 20) + "px";
+        p.style.top = (e.clientY - 10 + Math.random() * 40 - 20) + "px";
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 2200);
+    }
+};
+</script>
 
 </body>
 </html>
