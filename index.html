@@ -2,6 +2,7 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ⭐ 关键：手机适配 -->
 <title>给你的一封情书</title>
 
 <style>
@@ -9,41 +10,43 @@
         margin: 0;
         font-family: "微软雅黑", sans-serif;
         background: linear-gradient(#ffdde1, #ee9ca7);
-        overflow: hidden;
+        overflow-x: hidden;
         text-align: center;
         color: #fff;
     }
 
-    /* 照片轮播容器 */
+    /* 🌟 轮播容器：自动按屏幕宽度适配 */
     .slideshow {
-        width: 90vw;
-        max-width: 360px;
-        height: 90vw;
-        max-height: 360px;
-        background: rgba(255,255,255,0.3);
-        margin: 80px auto 20px auto;
-        position: relative;
-        border-radius: 20px;
+        width: 92vw;                  /* 宽度占屏幕 92% */
+        height: 92vw;                 /* 高度保持正方形，自适应 */
+        max-width: 380px;             /* 限制桌面端最大尺寸 */
+        max-height: 380px;
+        margin: 65px auto 20px auto;
+        background: rgba(255,255,255,0.25);
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 0 25px rgba(255,255,255,0.7);
+        box-shadow: 0 0 18px rgba(255,255,255,0.7);
+
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
+    /* 🌟 图片完整显示、等比例、不裁剪 */
     .slideshow img {
         width: 100%;
         height: 100%;
         position: absolute;
-        object-fit: contain;       /* ⭐ 显示整张照片 */
+        object-fit: contain;   /* ⭐ 完整显示照片 */
         opacity: 0;
         animation: slideShow 36s infinite;
-        background: rgba(255,255,255,0.5); /* 清爽底色避免黑块 */
-        padding: 10px;             /* 更好看 */
+        padding: 8px;
         box-sizing: border-box;
+        background: rgba(255,255,255,0.3);
     }
 
-    /* 9张图片淡入淡出 */
+    /* 图片切换延迟时间 */
     .slideshow img:nth-child(1) { animation-delay: 0s; }
     .slideshow img:nth-child(2) { animation-delay: 4s; }
     .slideshow img:nth-child(3) { animation-delay: 8s; }
@@ -62,10 +65,20 @@
         100% { opacity: 0; }
     }
 
+    /* 🌟 文本也适配手机 */
     .text {
-        font-size: 26px;
-        line-height: 40px;
+        font-size: 5vw;
+        max-font-size: 26px;
+        line-height: 7vw;
         opacity: 0;
+        padding: 0 5vw;
+    }
+
+    @media (min-width: 450px) {
+        .text {
+            font-size: 26px;
+            line-height: 40px;
+        }
     }
 
     .t1 { animation: fadeIn 3s forwards 1s; }
@@ -78,21 +91,27 @@
         to { opacity: 1; }
     }
 
+    /* 🌟 按钮适配手机 */
     .next-btn {
-        margin-top: 40px;
-        padding: 15px 35px;
-        font-size: 22px;
+        margin-top: 35px;
+        padding: 12px 28px;
+        font-size: 5vw;
+        max-font-size: 22px;
+
         color: #e75480;
         background: #fff;
         border: none;
-        border-radius: 50px;
+        border-radius: 40px;
         cursor: pointer;
         opacity: 0;
         animation: fadeIn 3s forwards 9s;
-        box-shadow: 0 0 15px rgba(255,255,255,0.7);
+        box-shadow: 0 0 12px rgba(255,255,255,0.7);
     }
 
-    /* 爱心飘落动画 */
+    @media (min-width: 450px) {
+        .next-btn { font-size: 22px; }
+    }
+
     @keyframes fall {
         to { transform: translateY(110vh); opacity: 0; }
     }
@@ -121,7 +140,7 @@ function createHeart() {
 setInterval(createHeart, 350);
 </script>
 
-<!-- 背景音乐（静音自动播放 + 点击恢复） -->
+<!-- 背景音乐（静音自动播放 + 点击恢复声音） -->
 <audio id="bgm" autoplay loop muted>
     <source src="music/marry me.mp3" type="audio/mp3">
 </audio>
@@ -134,7 +153,7 @@ document.addEventListener("click", function () {
 }, { once: true });
 </script>
 
-<!-- 照片轮播 -->
+<!-- ⭐ 完整显示照片的轮播 -->
 <div class="slideshow">
     <img src="img/image1.jpg">
     <img src="img/image2.jpg">
@@ -153,7 +172,7 @@ document.addEventListener("click", function () {
 <div class="text t3">我想牵着你的手，一直走下去。</div>
 <div class="text t4">所以……我有句话，想对你说。</div>
 
-<!-- 跳转按钮 -->
+<!-- 按钮 -->
 <button class="next-btn" onclick="location.href='proposal.html'">下一页 →</button>
 
 </body>
